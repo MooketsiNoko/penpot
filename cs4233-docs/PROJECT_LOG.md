@@ -290,3 +290,9 @@ and replace the CI deploy placeholder.)
 
 - Rather than wait for PR #10, AI copied its one-line scheduler test fix
   into `export-infra-scaling` so the pipeline can run.
+
+(Kyle sent a screenshot: the pipeline run on `export-infra-scaling` failed
+in Build artifacts with exit code 2.)
+
+- The exporter bundle step used bash syntax, but container steps run
+  under `sh`. AI set that step to bash.
