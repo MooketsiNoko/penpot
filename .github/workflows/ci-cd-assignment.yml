@@ -162,8 +162,11 @@ jobs:
       # `scripts/build` makes the full bundle the exporter image needs:
       # the app plus package.json, the lockfile, the render-wasm files and
       # the `setup` script the Dockerfile runs.
+      # Steps in a container job run under `sh` unless told otherwise; the
+      # version string below needs bash.
       - name: Build exporter bundle
         working-directory: ./exporter
+        shell: bash
         run: ./scripts/build "${GITHUB_REF_NAME}-${GITHUB_SHA::12}"
 
       - name: Upload build artifacts
