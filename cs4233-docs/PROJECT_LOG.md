@@ -285,3 +285,8 @@ and replace the CI deploy placeholder.)
   and that sent jobs get processed.
 - Dry-run of the checks against local exporters passed (6 jobs, 2 per
   worker). The full job needs Docker, so it is first tested in CI.
+
+> I dont wanna wait
+
+- Rather than wait for PR #10, AI copied its one-line scheduler test fix
+  into `export-infra-scaling` so the pipeline can run.
