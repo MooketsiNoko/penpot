@@ -296,3 +296,9 @@ in Build artifacts with exit code 2.)
 
 - The exporter bundle step used bash syntax, but container steps run
   under `sh`. AI set that step to bash.
+
+(Kyle sent a screenshot: run #14 on `export-infra-scaling` passed, Deploy
+included.)
+
+- Every deploy step passed: image built, Valkey + api + 3 workers started,
+  all registered on the shared queue, and the workers processed jobs.
