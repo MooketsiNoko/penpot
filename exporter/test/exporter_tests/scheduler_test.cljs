@@ -54,7 +54,7 @@
             (p/do
               (p/delay 10)
               (t/is (= [:one] @started))
-              (t/is (= "running" (:state (jobs/lookup (:id job1)))))
+              (t/is (= "processing" (:state (jobs/lookup (:id job1)))))
               (t/is (= "queued" (:state (jobs/lookup (:id job2)))))
               (open)
               (p/all [p1 p2])
