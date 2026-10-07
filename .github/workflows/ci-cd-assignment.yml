@@ -84,6 +84,15 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: penpotapp/devenv:latest
+    # The queue tests need a real redis; without PENPOT_REDIS_URI they skip.
+    services:
+      redis:
+        image: valkey/valkey:8
+        options: >-
+          --health-cmd "valkey-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -100,6 +109,8 @@ jobs:
 
       - name: Tests
         working-directory: ./exporter
+        env:
+          PENPOT_REDIS_URI: redis://redis/0
         run: ./scripts/test
 
   # STUB — not implemented yet.
