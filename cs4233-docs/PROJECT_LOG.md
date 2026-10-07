@@ -255,3 +255,12 @@ Success in 6m 24s.)
 
 - AI checked how far local `kylebranch` was ahead of GitHub; Kyle runs
   `git push` to update it.
+
+### 23. Job status tracking and retry handling (2026-10-06)
+
+> now lets plan on implementing this (Issue #4)
+
+- Decided on Valkey for durable job state to align with Penpot's existing architecture.
+- Implemented state transitions: queued -> processing on worker claim, processing -> done on success, processing -> failed -> queued on failure/crash, and failed (dead-lettered) after max attempts.
+- Added unit tests for claim race (two workers grab simultaneously, one wins), crash recovery/retry, and dead-lettering once max attempts is reached.
+- Balanced delimiters verified across all ClojureScript files.

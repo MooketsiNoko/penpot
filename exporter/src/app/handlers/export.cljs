@@ -127,7 +127,7 @@
   "The resource of a job another process ran, as the original route answers
   it once the export finished."
   [{:keys [state error resource-id name filename mtype resource-uri size]}]
-  (if (= "ended" state)
+  (if (contains? #{"ended" "done"} state)
     (d/without-nils {:id resource-id
                      :name name
                      :filename filename

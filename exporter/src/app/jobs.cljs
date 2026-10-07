@@ -37,7 +37,7 @@
 ;; hundreds of writes for information nobody reads at that resolution.
 (def ^:private progress-throttle-ms 250)
 
-(def ^:private terminal-states #{"ended" "error" "cancelled"})
+(def ^:private terminal-states #{"ended" "done" "error" "failed" "cancelled"})
 
 (defonce ^:private registry (atom {}))
 
@@ -60,14 +60,20 @@
   (store/fetch job-id))
 
 (defn- publish!
-  [{:keys [id profile-id resource-id state done total name filename mtype
+  [{:keys [id profile-id resource-id state status done total name filename mtype
            resource-uri error]}]
   (redis/pub! (redis/->tenant-key (str profile-id))
               (d/without-nils
                {:type :export-update
                 :job-id id
                 :resource-id resource-id
-                :status state
+                :status (or status
+                            (case state
+                              "done" "ended"
+                              "failed" "error"
+                              "processing" "running"
+                              state))
+                :state state
                 :done done
                 :total total
                 :name name
@@ -121,6 +127,7 @@
   [job run-fn]
   (let [job (-> job
                 (assoc :owner instance/id)
+                (assoc :state "processing")
                 (update :attempts (fnil inc 0)))
         id  (:id job)]
     (swap! registry assoc (str id) {:job job :run-fn run-fn :cancelled? false})
@@ -211,7 +218,8 @@
   start it."
   [job reason]
   (l/error :hint "export job failed" :job-id (str (:id job)) :reason reason)
-  (persist-unowned! job {:state "error"
+  (persist-unowned! job {:state "failed"
+                         :status "error"
                          :ended-at (now-ms)
                          :error reason}))
 
@@ -226,7 +234,7 @@
 
 (defn start!
   [job]
-  (transition! job {:state "running" :started-at (now-ms)}))
+  (transition! job {:state "processing" :status "running" :started-at (now-ms)}))
 
 (defn progress!
   "Reports `done` objects completed. Writes are throttled, so the caller need
@@ -248,7 +256,8 @@
 
 (defn complete!
   [job {:keys [uri filename mtype size] :as _resource}]
-  (transition! job {:state "ended"
+  (transition! job {:state "done"
+                    :status "ended"
                     :ended-at (now-ms)
                     :done (:total job)
                     :resource-uri uri
@@ -259,7 +268,8 @@
 (defn fail!
   [job cause]
   (l/error :hint "export job failed" :job-id (str (:id job)) :cause cause)
-  (transition! job {:state "error"
+  (transition! job {:state "failed"
+                    :status "error"
                     :ended-at (now-ms)
                     :error (ex-message cause)}))
 

@@ -212,8 +212,66 @@
                    spent' (jobs/fetch (:id spent))
                    queued (redis/lrange (queue/queue-key))]
              (t/is (= "queued" (:state retry')))
-             (t/is (= "error" (:state spent')))
+             (t/is (contains? #{"error" "failed"} (:state spent')))
              (t/is (= [(str (:id retry))] queued)))))))
+
+(t/deftest claim-race-two-workers-grab-only-one-wins
+  (t/testing "two simulated workers grab in quick succession, only one should win"
+    (t/async done
+      (run done
+           (fn []
+             (let [worker-a (str "worker-a-" (uuid/next))
+                   worker-b (str "worker-b-" (uuid/next))]
+               (p/let [job    (queued-job!)
+                       claims (p/all [(redis/blmove! (queue/queue-key) (queue/processing-key worker-a) "LEFT" "RIGHT" 1)
+                                      (redis/blmove! (queue/queue-key) (queue/processing-key worker-b) "LEFT" "RIGHT" 1)])
+                       held-a (redis/lrange (queue/processing-key worker-a))
+                       held-b (redis/lrange (queue/processing-key worker-b))
+                       depth  (queue/depth)]
+                 (t/is (= 1 (count (remove nil? claims))))
+                 (t/is (= [(str (:id job))] (remove nil? claims)))
+                 (t/is (or (and (= [(str (:id job))] held-a) (empty? held-b))
+                           (and (= [(str (:id job))] held-b) (empty? held-a))))
+                 (t/is (= 0 depth))
+                 (p/do
+                   (redis/del! (queue/processing-key worker-a))
+                   (redis/del! (queue/processing-key worker-b))))))))))
+
+(t/deftest retry-after-simulated-failure
+  (t/testing "a crashed worker's job returns to queued with attempts tracked"
+    (t/async done
+      (run done
+           (fn []
+             (let [failed-worker (str "crashed-" (uuid/next))]
+               (p/let [job      (jobs/create-queued! (job-attrs))
+                       _        (redis/sadd! (instance/registry-key) failed-worker)
+                       _        (redis/rpush! (queue/processing-key failed-worker) (str (:id job)))
+                       _        (store/persist! (assoc job :state "processing" :owner failed-worker :attempts 1))
+                       moved    (queue/reap!)
+                       _        (jobs/requeue! (str (:id job)))
+                       requeued (jobs/fetch (:id job))
+                       queued   (redis/lrange (queue/queue-key))]
+                 (t/is (= [(str (:id job))] moved))
+                 (t/is (= "queued" (:state requeued)))
+                 (t/is (nil? (:owner requeued)))
+                 (t/is (= [(str (:id job))] queued))
+                 (t/is (= 1 (:attempts requeued))))))))))
+
+(t/deftest dead-letter-once-max-attempts-hit
+  (t/testing "job fails and leaves the queue once attempts hit max"
+    (t/async done
+      (run done
+           (fn []
+             (let [max-attempts (cf/get :exporter-max-attempts 3)]
+               (p/let [job    (jobs/create-queued! (job-attrs))
+                       _      (store/persist! (assoc job :state "processing" :attempts max-attempts))
+                       _      (redis/rpush! (queue/queue-key) (str (:id job)))
+                       _      (jobs/requeue! (str (:id job)))
+                       dead   (jobs/fetch (:id job))
+                       queued (redis/lrange (queue/queue-key))]
+                 (t/is (contains? #{"failed" "error"} (:state dead)))
+                 (t/is (= "export worker lost" (:error dead)))
+                 (t/is (= [] queued)))))))))
 
 (t/deftest worker-claims-runs-and-releases-a-job
   (t/testing "a job whose payload cannot be prepared ends in error, not stuck in the queue"
@@ -230,7 +288,7 @@
                      _       (worker/stop)
                      depth   (queue/depth)
                      held    (redis/lrange (queue/processing-key instance/id))]
-               (t/is (= "error" (:state settled)))
+               (t/is (contains? #{"error" "failed"} (:state settled)))
                (t/is (= instance/id (:owner settled)))
                (t/is (= 0 depth))
                (t/is (= [] held))))))))

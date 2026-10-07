@@ -33,7 +33,7 @@
               ;; is what a straggling render still holds.
               _   (jobs/progress! job 7)]
         (let [current (jobs/lookup (:id job))]
-          (t/is (= "error" (:state current)))
+          (t/is (contains? #{"error" "failed"} (:state current)))
           (t/is (= "boom" (:error current)))
           (t/is (not= 7 (:done current))))
         (jobs/release! (:id job))
@@ -81,6 +81,6 @@
               ended (jobs/lookup (:id job))
               _   (jobs/release! (:id job))
               _   (jobs/progress! job 3)]
-        (t/is (= "ended" (:state ended)))
+        (t/is (contains? #{"ended" "done"} (:state ended)))
         (t/is (nil? (jobs/lookup (:id job))))
         (done)))))
