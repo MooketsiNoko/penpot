@@ -1,0 +1,73 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< app.penpot:export-job-queue >---------------------
+[INFO] Building export-job-queue 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ export-job-queue ---
+[INFO] Deleting /Users/kyleclouse/Desktop/College Classes/CS4233/penpot/export-job-queue/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ export-job-queue ---
+[INFO] skip non existing resourceDirectory /Users/kyleclouse/Desktop/College Classes/CS4233/penpot/export-job-queue/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ export-job-queue ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 6 source files with javac [debug release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ export-job-queue ---
+[INFO] skip non existing resourceDirectory /Users/kyleclouse/Desktop/College Classes/CS4233/penpot/export-job-queue/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ export-job-queue ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ export-job-queue ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$Close
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/Users/kyleclouse/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.4/byte-buddy-agent-1.15.4.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.841 s -- in app.penpot.exporter.queue.ExportJobQueueTest$Close
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$Cancel
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.626 s -- in app.penpot.exporter.queue.ExportJobQueueTest$Cancel
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$Timeouts
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.929 s -- in app.penpot.exporter.queue.ExportJobQueueTest$Timeouts
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$Retries
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.415 s -- in app.penpot.exporter.queue.ExportJobQueueTest$Retries
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$Concurrency
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.209 s -- in app.penpot.exporter.queue.ExportJobQueueTest$Concurrency
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$Submit
+Exception in thread "export-worker-1" java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@7da22118[Not completed, task = app.penpot.exporter.queue.ExportJobQueue$$Lambda/0x000000700127f020@38a0a868] rejected from java.util.concurrent.ThreadPoolExecutor@659925f4[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2081)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:841)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1376)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at app.penpot.exporter.queue.ExportJobQueue.run(ExportJobQueue.java:159)
+	at app.penpot.exporter.queue.ExportJobQueue.lambda$submit$0(ExportJobQueue.java:91)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in app.penpot.exporter.queue.ExportJobQueueTest$Submit
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$Constructor
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in app.penpot.exporter.queue.ExportJobQueueTest$Constructor
+[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.048 s -- in app.penpot.exporter.queue.ExportJobQueueTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 51, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.565 s
+[INFO] Finished at: 2026-11-12T15:03:15-06:00
+[INFO] ------------------------------------------------------------------------

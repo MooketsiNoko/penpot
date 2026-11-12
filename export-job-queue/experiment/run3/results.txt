@@ -1,0 +1,63 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< app.penpot:export-job-queue >---------------------
+[INFO] Building export-job-queue 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ export-job-queue ---
+[INFO] Deleting /Users/kyleclouse/Desktop/College Classes/CS4233/penpot/export-job-queue/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ export-job-queue ---
+[INFO] skip non existing resourceDirectory /Users/kyleclouse/Desktop/College Classes/CS4233/penpot/export-job-queue/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ export-job-queue ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 6 source files with javac [debug release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ export-job-queue ---
+[INFO] skip non existing resourceDirectory /Users/kyleclouse/Desktop/College Classes/CS4233/penpot/export-job-queue/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ export-job-queue ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ export-job-queue ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$CloseTests
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/Users/kyleclouse/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.4/byte-buddy-agent-1.15.4.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.866 s -- in app.penpot.exporter.queue.ExportJobQueueTest$CloseTests
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$CancelTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.711 s -- in app.penpot.exporter.queue.ExportJobQueueTest$CancelTests
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$TimeoutTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.982 s -- in app.penpot.exporter.queue.ExportJobQueueTest$TimeoutTests
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$RetryTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.959 s -- in app.penpot.exporter.queue.ExportJobQueueTest$RetryTests
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$ConcurrencyTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.346 s -- in app.penpot.exporter.queue.ExportJobQueueTest$ConcurrencyTests
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$SubmitTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in app.penpot.exporter.queue.ExportJobQueueTest$SubmitTests
+[INFO] Running app.penpot.exporter.queue.ExportJobQueueTest$ConstructorTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in app.penpot.exporter.queue.ExportJobQueueTest$ConstructorTests
+[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.916 s -- in app.penpot.exporter.queue.ExportJobQueueTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 53, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.427 s
+[INFO] Finished at: 2026-11-12T15:03:22-06:00
+[INFO] ------------------------------------------------------------------------
