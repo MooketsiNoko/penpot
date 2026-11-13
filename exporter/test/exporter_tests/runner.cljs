@@ -13,6 +13,7 @@
    [exporter-tests.crypto-test]
    [exporter-tests.export-shapes-test]
    [exporter-tests.jobs-test]
+   [exporter-tests.lease-test]
    [exporter-tests.queue-test]
    [exporter-tests.renderer-svg-test]
    [exporter-tests.scheduler-test]
@@ -26,6 +27,7 @@
   ['exporter-tests.crypto-test
    'exporter-tests.export-shapes-test
    'exporter-tests.jobs-test
+   'exporter-tests.lease-test
    'exporter-tests.queue-test
    'exporter-tests.renderer-svg-test
    'exporter-tests.scheduler-test

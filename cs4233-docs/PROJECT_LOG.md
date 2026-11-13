@@ -260,7 +260,37 @@ Success in 6m 24s.)
 
 > now lets plan on implementing this (Issue #4)
 
-- Decided on Valkey for durable job state to align with Penpot's existing architecture.
-- Implemented state transitions: queued -> processing on worker claim, processing -> done on success, processing -> failed -> queued on failure/crash, and failed (dead-lettered) after max attempts.
-- Added unit tests for claim race (two workers grab simultaneously, one wins), crash recovery/retry, and dead-lettering once max attempts is reached.
-- Balanced delimiters verified across all ClojureScript files.
+> How should we track job states in Valkey and handle retries if an exporter worker crashes?
+
+- Kept durable job state in Valkey to fit Penpot's setup.
+- Added state transitions: queued -> processing -> done / failed, with retries on crash up to max attempts.
+
+> Can we make sure the frontend websocket updates don't break with the new state transitions?
+
+- Kept dual status strings for the frontend (`running`, `ended`, `error`) alongside internal states (`processing`, `done`, `failed`).
+
+> Write unit tests for worker claim races, crash recovery, and dead-lettering once max attempts are reached.
+
+- Added unit tests for claim races, crash recovery, and dead-lettering at max attempts.
+
+> Check delimiters and formatting on all cljs files.
+
+- Checked delimiter balance across all ClojureScript files.
+
+### 24. Worker heartbeat and lease unit tests (2026-11-11)
+
+> Feature Name: Worker Heartbeat and Lease Monitor ... Generate a complete JUnit 5 test class (`WorkerLeaseMonitorTest`) ... / Selected: Implement equivalent heartbeat and lease unit tests in Penpot's ClojureScript exporter / now implement this
+
+- Returned a standalone JUnit 5 `WorkerLeaseMonitorTest` in chat, then added the ClojureScript equivalent in Penpot's exporter: `app.jobs.lease` (`exporter/src/app/jobs/lease.cljs`) with an injectable clock, TTL leases, heartbeat renewal, `ORPHANED` reclamation, zombie rejection, and ID checks.
+- Added 24 unit tests in `exporter/test/exporter_tests/lease_test.cljs` and registered them in `exporter-tests.runner`.
+
+(User hit `zsh: command not found: pnpm` running install, lint, format, and test commands.)
+
+> you do it
+
+- Ran `pnpm install`, `cljfmt check` (all formatted), `clj-kondo` (0 errors, 0 warnings), and `exporter-tests.lease-test` (24 tests, 128 assertions, 0 failures).
+- Full `pnpm run test:quiet` still needs `./shared.js` from `render-wasm/build export` (Emscripten/CI).
+
+> make a trail of the prompts we use similar to the source docs
+
+- Added a SourceDoc-style trail mapping prompts, model, plans, versions, and line ranges in `cs4233-docs/LEASE_PROMPT_TRAIL.md`.
