@@ -1,0 +1,30 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< app.penpot:export-job-dispatcher >------------------
+[INFO] Building export-job-dispatcher 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ export-job-dispatcher ---
+[INFO] Deleting C:\Users\mooke\Documents\meProjects\penpot\export-job-dispatcher\target
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ export-job-dispatcher ---
+[INFO] skip non existing resourceDirectory C:\Users\mooke\Documents\meProjects\penpot\export-job-dispatcher\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ export-job-dispatcher ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ export-job-dispatcher ---
+[INFO] skip non existing resourceDirectory C:\Users\mooke\Documents\meProjects\penpot\export-job-dispatcher\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ export-job-dispatcher ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ export-job-dispatcher ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.555 s
+[INFO] Finished at: 2026-11-12T22:57:25-06:00
+[INFO] ------------------------------------------------------------------------
