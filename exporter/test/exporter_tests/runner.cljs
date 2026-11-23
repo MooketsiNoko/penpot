@@ -15,6 +15,7 @@
    [exporter-tests.jobs-test]
    [exporter-tests.queue-test]
    [exporter-tests.renderer-svg-test]
+   [exporter-tests.retry-test]
    [exporter-tests.scheduler-test]
    [exporter-tests.shell-test]
    [exporter-tests.wasm-pool-test]
@@ -28,6 +29,7 @@
    'exporter-tests.jobs-test
    'exporter-tests.queue-test
    'exporter-tests.renderer-svg-test
+   'exporter-tests.retry-test
    'exporter-tests.scheduler-test
    'exporter-tests.shell-test
    'exporter-tests.wasm-pool-test])
